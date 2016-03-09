@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>MapIt</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<style>
+	  html, body {
+	 height: 100%;
+	 margin: 0;
+	 padding: 0;
+	  }
+	  #map {
+	 height: 80%;
+	  }
+	</style>
+  </head>
+  <body>
+	<p id="test">Her kommer din posisjon hvis funnet</p>
+	<div id="map"></div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=drawing,places"></script>
+	<script src="Toolbox.js"></script>
+	<script src="GenLap.js"></script>
+<script>
+
+/**
+*Current bugs:
+*we need information about the points used to make a lap to avoid illegal positions (aka. highway)
+*we need to get hold of the lap that is pushed to the map via directionService. We should process this our self
+*Some code truble if the browser does not support pos
+*
+**/
+
+var map;
+var apiKey = 'AIzaSyBG8lFIm-BT8ERkoGJc9h87RKIXSqwbo4w';
+var sens = 40 //meters between points we should check 
+
+var drawingManager;
+var infoWindow;
+
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+
+var polylines = [];
+var size;
+
+size = 4;
+
+function initMap() {
+	directionsDisplay = new google.maps.DirectionsRenderer();
+
+	map = new google.maps.Map(document.getElementById('map'), {
+		center: {lat: 59.9622808, lng: 10.760098},
+		zoom: 6
+	});
+	infoWindow = new google.maps.InfoWindow({map: map});
+
+	directionsDisplay.setMap(map);
+	handler();
+}
+
+function handler(){
+	genLap(undefined);
+	//firstPath();
+	//remember to include callback()
+
+}
+	$(window).load(initMap);
+	</script>
+  </body>
+</html>
