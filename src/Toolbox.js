@@ -109,6 +109,9 @@ function drawSnappedPolyline() {
 	snappedPolyline.setMap(map);
 	polylines.push(snappedPolyline);
 }
+/**
+*draws the snapped polyline
+**/
 
 function drawPolyline(Coordinates) {
 	var Polyline = new google.maps.Polyline({
