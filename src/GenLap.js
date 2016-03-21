@@ -125,9 +125,22 @@ function calcRoute(snappedCoordinates, myPos){
 		travelMode: google.maps.TravelMode.WALKING
 	};
 	directionsService.route(request, function(result, status){
+
 		if(status == google.maps.DirectionsStatus.OK){
+			var finalPoints = [];
 			// okey, how can I get hold of the route we pushed to the map?
-			directionsDisplay.setDirections(result);
+			//directionsDisplay.setDirections(result);
+			var legs = result.routes[0].legs;
+			for(i = 0; i < legs.length; i++){
+				var steps = legs[i].steps;
+				for(j = 0; j < steps.length; j++){
+					nextSegment = steps[j].path;
+					for(k = 0; k < nextSegment.length; k++){
+						finalPoints.push(nextSegment[k]);
+					}
+				}
+			}
+			drawPolyline(finalPoints);
 		}else{
 			window.alert('Directions request failed due to ' + status);
 		}

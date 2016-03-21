@@ -109,6 +109,16 @@ function drawSnappedPolyline() {
 	snappedPolyline.setMap(map);
 	polylines.push(snappedPolyline);
 }
+
+function drawPolyline(Coordinates) {
+	var Polyline = new google.maps.Polyline({
+		path: Coordinates,
+		strokeColor: 'black',
+		strokeWeight: 2
+	});
+	Polyline.setMap(map);
+	polylines.push(Polyline);
+}
 /**
 *calculate the distance between snapped points. if it is more than the sens we need to look at that path
 **/
