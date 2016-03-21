@@ -128,7 +128,6 @@ function calcRoute(snappedCoordinates, myPos){
 
 		if(status == google.maps.DirectionsStatus.OK){
 			var finalPoints = [];
-			// okey, how can I get hold of the route we pushed to the map?
 			//directionsDisplay.setDirections(result);
 			var legs = result.routes[0].legs;
 			for(i = 0; i < legs.length; i++){
