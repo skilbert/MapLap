@@ -8,15 +8,18 @@ var processedCordinates = [];
 *handler for generating a lap
 *
 **/
-function genLap(myPos){
+function genLap(myPos, callback){
 	var snappedCoordinates = [];
 	var pathValuesUrl = [];
 
 	if(myPos == undefined){
 		//if we are not given the position we ask the browser for it
-		getPos();
+		getPos(callback);
 	}else{
-		addPos(myPos);
+		if(callback == undefined){
+			console.log("wtf");
+		}
+		addPos(myPos, callback);
 	}
 }
 
@@ -24,14 +27,14 @@ function genLap(myPos){
 *feches the position from findPos. Uses callback to genLap
 *@callback to genLap to try again, this time with the right position
 **/
-function getPos(){
-	findPos(genLap);
+function getPos(callback){
+	findPos(genLap, callback);
 }
 /*
 **adds the position to the screen. zoom and text
 *@calls where() with myPos
 **/
-function addPos(myPos){
+function addPos(myPos, callback){
 
 	if(myPos == undefined){
 		console.log("did not find pos, you would need to search");
@@ -45,13 +48,13 @@ function addPos(myPos){
 		map.setZoom(18);
 		document.getElementById('test').innerHTML = 'Din posisjon er : ' + JSON.stringify(myPos);
 	}
-	where(myPos);
+	where(myPos, callback);
 }
 /**
 *where should the lap go? We find an origo to start the lap, the circle we generate contains the start and ending point
 *@calls genPath with pathValuesUrl and myPos
 **/
-function where(myPos){
+function where(myPos, callback){
 	console.log("generating alfa path");
 	var myPosLng = myPos["lng"]; // = 59.9622808; //for debug
 	var myPosLat = myPos["lat"]; //= 10.760098; // for debug
@@ -71,22 +74,22 @@ function where(myPos){
 
 		pathValuesUrl = circle(origoLat, origoLng);
 	}
-	genPath(pathValuesUrl, myPos)
+	genPath(pathValuesUrl, myPos, callback)
 }
 
 /**
 *takes a path for a circle and we then try to snap to roads via snapToRoads
 *@calls prossesSnapToRoadRespons via callback to handle the respons from snapToRoads
 **/
-function genPath(pathValuesUrl, myPos){
+function genPath(pathValuesUrl, myPos, callback){
 	console.log("snapping alfa path to road");
-	snapToRoads(pathValuesUrl, processSnapToRoadResponse, myPos);
+	snapToRoads(pathValuesUrl, processSnapToRoadResponse, myPos, callback);
 }
 /**
 *prosseses the respons from snapp to roads. We find, and separate the points that was snapped to a road from the rest. We hold on to the pos it was snapped to, not the orginal
 *@calls calcRoute with the final respons
 **/
-function processSnapToRoadResponse(data, myPos) {
+function processSnapToRoadResponse(data, myPos, callback) {
 	console.log("processes snapToRoads respons")
 	var snappedCoordinates = [];
 
@@ -102,14 +105,14 @@ function processSnapToRoadResponse(data, myPos) {
 			originalIndexes.push(data.snappedPoints[i].originalIndex);
 		}
 	}
-	calcRoute(snappedCoordinates, myPos);
+	calcRoute(snappedCoordinates, myPos, callback);
 }
 /**
 *takes all the snappedCordinats we have calculated by now and selects a few of these that we send to directionsService
 *The result is pushed to the map. We should do something about that.
 *this method has the directions we should use later if the user wants it on there phone or something. Remember this
 **/
-function calcRoute(snappedCoordinates, myPos){
+function calcRoute(snappedCoordinates, myPos, callback){
 	var processedCordinates = selectSnapped(snappedCoordinates);
 
 	//printArray(processedCordinates); // for debug
@@ -138,7 +141,7 @@ function calcRoute(snappedCoordinates, myPos){
 					}
 				}
 			}
-			lengthCalc(finalPoints);
+			callback(finalPoints);
 		}else{
 			window.alert('Directions request failed due to ' + status);
 		}

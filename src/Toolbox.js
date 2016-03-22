@@ -168,7 +168,7 @@ function getClosest (latlng, snappedCoordinates){
 *find pos via html geolocation
 *@callback with the result
 **/
-function findPos(callback){
+function findPos(callback, callback2){
 	console.log("trying to find pos..");
 
 	var pos;
@@ -183,21 +183,21 @@ function findPos(callback){
 			};
 
 			if(typeof callback == 'function'){
-			      callback(pos);
+			      callback(pos, callback2);
 			}
 
 		},     function() {
 				//can not find pos
 				handleLocationError(true, infoWindow, map.getCenter());
 				if(typeof callback == 'function'){
-					callback(pos);
+					callback(pos, callback2);
 				}
 			});
 	} else {
 		// Browser doesn't support Geolocation. This needs to be taken care of
 		handleLocationError(false, infoWindow, map.getCenter());
 		if(typeof callback == 'function'){
-			callback(pos);
+			callback(pos, callback2);
 		}
 	}
 }
@@ -240,12 +240,12 @@ function circle(origoLat, origoLng){
 *calls googles snapToRoads. Takes myPos only to pass it to callback
 *@callback is used to return the data and avoid the code to run away without us
 **/
-function snapToRoads(pathValuesUrl, callback, myPos){
+function snapToRoads(pathValuesUrl, callback, myPos, callback2){
 	$.get('https://roads.googleapis.com/v1/snapToRoads', {
 		interpolate: true,
 		key: apiKey,
 		path: pathValuesUrl.join('|')
 	}, function(data) {
-		callback(data, myPos);
+		callback(data, myPos, callback2);
 	});
 }
