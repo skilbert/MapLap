@@ -123,10 +123,10 @@ function drawSnappedPolyline() {
 *draws the snapped polyline
 **/
 
-function drawPolyline(Coordinates) {
+function drawPolyline(Coordinates, color) {
 	var Polyline = new google.maps.Polyline({
 		path: Coordinates,
-		strokeColor: 'black',
+		strokeColor: color,
 		strokeWeight: 2
 	});
 	Polyline.setMap(map);
@@ -248,4 +248,15 @@ function snapToRoads(pathValuesUrl, callback, myPos, callback2){
 	}, function(data) {
 		callback(data, myPos, callback2);
 	});
+}
+/**
+*Generates a random hex color
+**/
+function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }

@@ -141,6 +141,7 @@ function calcRoute(snappedCoordinates, myPos, callback){
 					}
 				}
 			}
+			console.log('Returning to handler');
 			callback(finalPoints);
 		}else{
 			window.alert('Directions request failed due to ' + status);
