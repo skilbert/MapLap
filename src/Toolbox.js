@@ -42,7 +42,7 @@ function rad (x) {
 	return x * Math.PI / 180;
 }
 /**
-*get the distance between two lat lng positions
+*get the distance between two latlng positions
 **/
 function getDistance(p1, p2) {
 	var R = 6378137; // Earth’s mean radius in meter
@@ -54,6 +54,16 @@ function getDistance(p1, p2) {
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 	var d = R * c;
 	return d; // returns the distance in meter
+}
+/**
+*calculates the distance for a path given as an array
+**/
+function getDistanceArray(array){
+	var totDistance = 0;
+	for(var i = 1; i < array.length; i++){
+		totDistance = totDistance + getDistance(array[i-1], array[i]);
+	}
+	return totDistance;
 }
 /**
 *find the points that did not snap to a road

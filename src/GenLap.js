@@ -1,4 +1,4 @@
-//everything needed to produce a lap. In the order that it is executed. Please only call the handler genLap, or else it will feel bad about it self 
+//everything needed to produce a lap. In the order that it is executed. Please only call the handler genLap, or else it will feel bad about itself 
 
 var originalIndexes = [];
 var placeIdArray = [];
@@ -21,7 +21,7 @@ function genLap(myPos){
 }
 
 /**
-*feches the position from findPos. Uses callback to addPos
+*feches the position from findPos. Uses callback to genLap
 *@callback to genLap to try again, this time with the right position
 **/
 function getPos(){
@@ -128,7 +128,6 @@ function calcRoute(snappedCoordinates, myPos){
 
 		if(status == google.maps.DirectionsStatus.OK){
 			var finalPoints = [];
-			//directionsDisplay.setDirections(result);
 			var legs = result.routes[0].legs;
 			for(i = 0; i < legs.length; i++){
 				var steps = legs[i].steps;
@@ -139,7 +138,7 @@ function calcRoute(snappedCoordinates, myPos){
 					}
 				}
 			}
-			drawPolyline(finalPoints);
+			lengthCalc(finalPoints);
 		}else{
 			window.alert('Directions request failed due to ' + status);
 		}

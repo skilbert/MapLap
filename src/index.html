@@ -20,18 +20,12 @@
 	<div id="map"></div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?libraries=drawing,places"></script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG8lFIm-BT8ERkoGJc9h87RKIXSqwbo4w"></script>
+
 	<script src="Toolbox.js"></script>
 	<script src="GenLap.js"></script>
 <script>
-
-/**
-*Current bugs:
-*we need information about the points used to make a lap to avoid illegal positions (aka. highway)
-*we need to get hold of the lap that is pushed to the map via directionService. We should process this our self
-*Some code truble if the browser does not support pos
-*
-**/
 
 var map;
 var apiKey = 'AIzaSyBG8lFIm-BT8ERkoGJc9h87RKIXSqwbo4w';
@@ -61,8 +55,13 @@ function initMap() {
 	handler();
 }
 
-function handler(){
-	genLap(undefined);
+function handler(value){
+	if(value == undefined){
+		genLap(undefined);
+	}else{
+		displayLap(value);
+	}
+
 	//firstPath();
 	//remember to include callback()
 
