@@ -50,7 +50,8 @@ function addPos(myPos, callback){
 	where(myPos, callback);
 }
 /**
-*where should the lap go? We find an origo to start the lap, the circle we generate contains the start and ending point
+*where should the lap go? We find an origo to start the lap, the circle we generate contains the same start and ending point
+*the method can make 4 different laps and makes a different each time it is called. It counts with lapsCreated
 *@calls genPath with pathValuesUrl and myPos
 **/
 function where(myPos, callback){
