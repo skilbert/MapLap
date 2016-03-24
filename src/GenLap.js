@@ -4,6 +4,8 @@ var originalIndexes = [];
 var placeIdArray = [];
 var processedCordinates = [];
 
+var lapsCreated = 0;
+
 /**
 *handler for generating a lap
 *
@@ -16,9 +18,6 @@ function genLap(myPos, callback){
 		//if we are not given the position we ask the browser for it
 		getPos(callback);
 	}else{
-		if(callback == undefined){
-			console.log("wtf");
-		}
 		addPos(myPos, callback);
 	}
 }
@@ -63,17 +62,18 @@ function where(myPos, callback){
 	var origoLng;
 
 	var pathValuesUrl = [];
-	var i = 0;
+	var i = lapsCreated;
 	var j = 0;
 
-	for (i = 1; i < 2; i++){
-		j = i * 90;
+	j = i * 90;
 
-		origoLat = size * 0.001 * Math.sin(j*(Math.PI / 180)) + myPosLat;
-		origoLng = size * 0.002 * Math.cos(j*(Math.PI / 180)) + myPosLng;
+	origoLat = size * 0.001 * Math.sin(j*(Math.PI / 180)) + myPosLat;
+	origoLng = size * 0.002 * Math.cos(j*(Math.PI / 180)) + myPosLng;
 
-		pathValuesUrl = circle(origoLat, origoLng);
-	}
+	pathValuesUrl = circle(origoLat, origoLng);
+
+	lapsCreated = lapsCreated + 1;
+
 	genPath(pathValuesUrl, myPos, callback)
 }
 
@@ -142,7 +142,7 @@ function calcRoute(snappedCoordinates, myPos, callback){
 				}
 			}
 			console.log('Returning to handler');
-			callback(finalPoints);
+			callback(finalPoints, lapsCreated);
 		}else{
 			window.alert('Directions request failed due to ' + status);
 		}

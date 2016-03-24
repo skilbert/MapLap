@@ -42,6 +42,8 @@ var directionsService = new google.maps.DirectionsService();
 var polylines = [];
 var size;
 
+var totLaps = 3; //at this time we make 3 laps and show the to the user
+
 size = 4;
 
 function initMap() {
@@ -57,11 +59,17 @@ function initMap() {
 	handler(undefined);
 }
 
-function handler(value){
+function handler(value, lapsCreated){
 	if(value == undefined){
 		genLap(undefined, handler);
 	}else{
 		displayLap(value);
+
+		console.log("lapsCreated: "+lapsCreated);
+		if(lapsCreated < totLaps){
+			console.log('\n');
+			handler(undefined);
+		}
 	}
 
 	//firstPath();
