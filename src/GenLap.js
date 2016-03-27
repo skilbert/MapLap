@@ -42,10 +42,9 @@ function addPos(myPos, callback){
 		console.log("pos found. zooming and centering");
 
 		infoWindow.setPosition(myPos);
-		infoWindow.setContent('Du er ca her');
+		infoWindow.setContent('We think you are here');
 		map.setCenter(myPos);
-		map.setZoom(18);
-		document.getElementById('test').innerHTML = 'Din posisjon er : ' + JSON.stringify(myPos);
+		map.setZoom(15);
 	}
 	where(myPos, callback);
 }

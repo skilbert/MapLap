@@ -1,26 +1,12 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
 	<title>MapIt</title>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
-	<style>
-	  html, body {
-	 height: 100%;
-	 margin: 0;
-	 padding: 0;
-	  }
-	  #map {
-	 height: 80%;
-	  }
-	</style>
-  </head>
-  <body>
-	<p id="test">Her kommer din posisjon hvis funnet</p>
-	<div id="map"></div>
 
 	<!-- GOOGLE MAPS -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG8lFIm-BT8ERkoGJc9h87RKIXSqwbo4w"></script>
 
@@ -40,6 +26,74 @@
 	<script src="GenLap.js"></script>
 	<script src="DisplayLap.js"></script>
 
+	<style>
+		html, body {
+ 			height: 100%;
+ 			margin: 0;
+			padding: 0;
+            background-color: gray;
+            background-image: url("images/background.jpg");
+            background-size: cover;
+		}
+		#map {
+			height: 80%;
+            width: 91%;
+            margin:  0 auto;
+
+		}
+        .vcenter {
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+        }
+        .hcenter{
+            display: inline-block;
+            float: none;
+            text-align: center;
+        }
+        .hright{
+            display: inline-block;
+            float: none;
+            text-align: right;
+        }
+        .spacer {
+            margin-top: 2%; /* define margin as you see fit */
+        }
+	</style>
+</head>
+<body>
+
+    <div class="container-fluid">
+            <h1 style="color: white">MapLap</h1>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3"> 
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                             <input type="text" class="form-control" placeholder=" Starting position">
+                        </div>
+                        <button type="submit" class="btn btn-default">Search</button>
+                    </form>
+                </div>
+                <div class="col-md-3"> 
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                             <input type="text" class="form-control" placeholder="Desired length">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+                <div class="col-md-1 vcenter hright">
+                    <h5 style="color: white">Lengths:</h5>
+                </div>
+                <div id="laps" class="col-md-2 vcenter hcenter">
+                    <!--JavaScript displayLap.js fills this dynamically-->
+                </div>
+            </div>
+
+    </div>
+    <div id="map" class="row"></div>
 <script>
 
 var map;
