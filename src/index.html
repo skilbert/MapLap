@@ -35,12 +35,10 @@
             background-image: url("images/background.jpg");
             background-size: cover;
 		}
-		#map {
-			height: 80%;
-            width: 91%;
-            margin:  0 auto;
+        .logo {
+            height: 20px;
+        }
 
-		}
         .vcenter {
             display: inline-block;
             vertical-align: middle;
@@ -67,7 +65,46 @@
             text-align: left;
         }
         .spacer {
-            margin-top: 2%; /* define margin as you see fit */
+            margin-top: 2%; 
+        }
+        @media (max-height: 600px){
+            .logo {
+                height: 70px;
+            }
+            #map {
+                position: absolute;
+                top: 125px;
+                bottom: 2%;
+
+                left: 2%;
+                right: 2%;
+            }
+        }
+        @media (min-height: 600px){
+            .logo {
+                height: auto;
+            }
+            #map {
+                position: absolute;
+                top: 150px;
+                bottom: 2%;
+
+                left: 2%;
+                right: 2%;
+            }
+        }
+        @media (max-width: 800px) {
+            .logo {
+                height: auto;
+            }
+            #map {
+                position: absolute;
+                top: 200px;
+                bottom: 2%;
+
+                left: 2%;
+                right: 2%
+            }
         }
 	</style>
 </head>
@@ -75,11 +112,10 @@
 
     <div class="container-fluid">
         <div class="row">
-            <img src="images/logo.png" style="margin-top: 3px; margin-left: 10px"></img>
+            <img src="images/logo.png" class="logo" alt="logo" style="margin-top: 3px; margin-left: 10px"></img>
         </div>
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-3 vbott"> 
+        <div id="menu" class="row">
+            <div class="col-md-3 col-md-offset-1 vbott"> 
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
                          <input type="text" class="form-control" placeholder=" Starting position">
