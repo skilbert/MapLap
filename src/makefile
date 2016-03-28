@@ -3,4 +3,4 @@ setup:
 up:
 	scp index.html Toolbox.js GenLap.js DisplayLap.js root@vps242864.ovh.net:/var/www/html
 img:
-	scp images/background.jpg root@vps242864.ovh.net:/var/www/html/images
+	scp images/background.jpg images/logo.png root@vps242864.ovh.net:/var/www/html/images
