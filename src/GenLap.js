@@ -58,6 +58,8 @@ function where(myPos, callback){
 	var myPosLng = myPos["lng"]; // = 59.9622808; //for debug
 	var myPosLat = myPos["lat"]; //= 10.760098; // for debug
 
+       console.log(myPosLat);
+
 	var origoLat;
 	var origoLng;
 
@@ -125,6 +127,7 @@ function calcRoute(snappedCoordinates, myPos, callback){
 		destination:myPos,
 		waypoints: processedCordinates,
 		avoidHighways: true,
+              avoidFerries: true,
 		travelMode: google.maps.TravelMode.WALKING
 	};
 	directionsService.route(request, function(result, status){
@@ -142,7 +145,7 @@ function calcRoute(snappedCoordinates, myPos, callback){
 				}
 			}
 			console.log('Returning to handler');
-			callback(finalPoints, lapsCreated);
+			callback(myPos, lapsCreated, finalPoints);
 		}else{
 			window.alert('Directions request failed due to ' + status);
 		}
