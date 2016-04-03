@@ -1,0 +1,79 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: gray;
+    background-image: url("images/background.jpg");
+    background-size: cover;
+}
+.logo {
+    height: 20px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+.vbott {
+    display: inline-block;
+    vertical-align: bottom;
+    float: none;
+}
+.hcenter{
+    display: inline-block;
+    float: none;
+    text-align: center;
+}
+.hright{
+    display: inline-block;
+    float: none;
+    text-align: right;
+}
+.hleft{
+    display: inline-block;
+    float: none;
+    text-align: left;
+}
+.spacer {
+    margin-top: 2%; 
+}
+@media (max-height: 600px){
+    .logo {
+        height: 70px;
+    }
+    #map {
+        position: absolute;
+        top: 125px;
+        bottom: 2%;
+
+        left: 2%;
+        right: 2%;
+    }
+}
+@media (min-height: 600px){
+    .logo {
+        height: auto;
+    }
+    #map {
+        position: absolute;
+        top: 150px;
+        bottom: 2%;
+
+        left: 2%;
+        right: 2%;
+    }
+}
+@media (max-width: 800px) {
+    .logo {
+        height: auto;
+    }
+    #map {
+        position: absolute;
+        top: 200px;
+        bottom: 2%;
+
+        left: 2%;
+        right: 2%
+    }
+}

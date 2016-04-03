@@ -5,10 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
-	<!-- GOOGLE MAPS -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG8lFIm-BT8ERkoGJc9h87RKIXSqwbo4w"></script>
+    <!-- GOOGLE Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
 	<!-- BOOTSTRAP -->
 
@@ -21,92 +19,9 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-	<!-- SCRIPT FILES -->
-	<script src="Toolbox.js"></script>
-	<script src="GenLap.js"></script>
-	<script src="DisplayLap.js"></script>
-
-	<style>
-		html, body {
- 			height: 100%;
- 			margin: 0;
-			padding: 0;
-            background-color: gray;
-            background-image: url("images/background.jpg");
-            background-size: cover;
-		}
-        .logo {
-            height: 20px;
-        }
-
-        .vcenter {
-            display: inline-block;
-            vertical-align: middle;
-            float: none;
-        }
-        .vbott {
-            display: inline-block;
-            vertical-align: bottom;
-            float: none;
-        }
-        .hcenter{
-            display: inline-block;
-            float: none;
-            text-align: center;
-        }
-        .hright{
-            display: inline-block;
-            float: none;
-            text-align: right;
-        }
-        .hleft{
-            display: inline-block;
-            float: none;
-            text-align: left;
-        }
-        .spacer {
-            margin-top: 2%; 
-        }
-        @media (max-height: 600px){
-            .logo {
-                height: 70px;
-            }
-            #map {
-                position: absolute;
-                top: 125px;
-                bottom: 2%;
-
-                left: 2%;
-                right: 2%;
-            }
-        }
-        @media (min-height: 600px){
-            .logo {
-                height: auto;
-            }
-            #map {
-                position: absolute;
-                top: 150px;
-                bottom: 2%;
-
-                left: 2%;
-                right: 2%;
-            }
-        }
-        @media (max-width: 800px) {
-            .logo {
-                height: auto;
-            }
-            #map {
-                position: absolute;
-                top: 200px;
-                bottom: 2%;
-
-                left: 2%;
-                right: 2%
-            }
-        }
-	</style>
+    <!--custom STYLESHEET-->
+    <link type="text/css" rel="stylesheet" href="style.css">
+   
 </head>
 <body>
 
@@ -116,11 +31,11 @@
         </div>
         <div id="menu" class="row">
             <div class="col-md-3 col-md-offset-1 vbott"> 
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search" onsubmit="return false">
                     <div class="form-group">
-                         <input type="text" class="form-control" placeholder=" Starting position">
+                         <input id="place-search" class="form-control" type="text" placeholder="Starting position">
                     </div>
-                    <button type="submit" class="btn btn-default">Search</button>
+                    <button id="place-search-btn" type="button" class="btn btn-default">Search</button>
                 </form>
             </div>
             <div class="col-md-3 vbott"> 
@@ -142,7 +57,7 @@
         </div>
     </div>
     <div id="map" class="row"></div>
-<script>
+<script type="text/javascript">
 
 var map;
 var apiKey = 'AIzaSyBG8lFIm-BT8ERkoGJc9h87RKIXSqwbo4w';
@@ -152,10 +67,12 @@ var drawingManager;
 var infoWindow;
 
 var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
+var directionsService;
 
 var polylines = [];
 var size;
+
+var searchBox;
 
 var totLaps = 3; //at this time we make 3 laps and show the to the user
 
@@ -163,6 +80,9 @@ size = 4;
 
 function initMap() {
 	directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsService = new google.maps.DirectionsService();
+
+    console.log("api loaded");
 
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 59.9622808, lng: 10.760098},
@@ -171,27 +91,40 @@ function initMap() {
 	infoWindow = new google.maps.InfoWindow({map: map});
 
 	directionsDisplay.setMap(map);
-	handler(undefined);
+    gui();
+	//handler(undefined);
 }
 
-function handler(value, lapsCreated){
-	if(value == undefined){
+function handler(position, lapsCreated, lap){
+    //gen new lap with geoloacation from browser
+	if(position == undefined){
 		genLap(undefined, handler);
-	}else{
-		displayLap(value);
+
+    //gen new lap with location provided as value
+	}else if(lapsCreated == undefined){
+        genLap(position, handler);
+
+    //this is a return from genLap
+    }else if(lap != undefined){
+		displayLap(lap);
 
 		console.log("lapsCreated: "+lapsCreated);
 		if(lapsCreated < totLaps){
 			console.log('\n');
-			handler(undefined);
+			handler(position);
 		}
 	}
 
-	//firstPath();
-	//remember to include callback()
-
 }
-	$(window).load(initMap);
-	</script>
+</script>
+    <!-- SCRIPT FILES -->
+    <script type="text/javascript" src="Toolbox.js"></script>
+    <script type="text/javascript" src="GenLap.js"></script>
+    <script type="text/javascript" src="DisplayLap.js"></script>
+    <script type="text/javascript" src="GUI.js"></script>
+
+    <!-- MAPS API -->
+    <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG8lFIm-BT8ERkoGJc9h87RKIXSqwbo4w&libraries=places, drawing&callback=initMap"></script>
+
   </body>
 </html>

@@ -110,9 +110,9 @@ function selectSnapped(snappedCoordinates){
 *Draws the snapped polyline (after processing snap-to-road response).
 *this might need map as a parameter, have not used it here yet
 **/
-function drawSnappedPolyline() {
+function drawPolylineUrl(Coordinates) {
 	var snappedPolyline = new google.maps.Polyline({
-		path: snappedCoordinates,
+		path: Coordinates.join('|'),
 		strokeColor: 'black',
 		strokeWeight: 2
 	});
@@ -130,7 +130,7 @@ function drawPolyline(Coordinates, color) {
 		strokeWeight: 2,
 		map: map
 	});
-	//Polyline.setMap(map);
+	Polyline.setMap(map);
 	polylines.push(Polyline);
 }
 /**
@@ -176,7 +176,6 @@ function findPos(callback, callback2){
 
 	// Try HTML5 geolocation.
 	if (navigator.geolocation) {
-		//this part under here is asyncron.... figure something out
 		navigator.geolocation.getCurrentPosition(function(position) {
 			pos = {
 				lat: position.coords.latitude,
@@ -247,7 +246,7 @@ function snapToRoads(pathValuesUrl, callback, myPos, callback2){
 		key: apiKey,
 		path: pathValuesUrl.join('|')
 	}, function(data) {
-		callback(data, myPos, callback2);
+		callback(data, myPos, callback2)
 	});
 }
 /**
