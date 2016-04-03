@@ -1,6 +1,9 @@
 function gui(){
     placeSearch();
 }
+/*
+* Used for searching for a new location
+*/
 function placeSearch(){
     var btn = document.getElementById('place-search-btn');
     var input = document.getElementById('place-search');
@@ -12,6 +15,9 @@ function placeSearch(){
     });
     searchBox.addListener('place_changed', newLocation);
 }
+/*
+* new location is found (searchbox has it)
+*/
 function newLocation(){
     console.log("SEARCH!!!!!!!!");
     var place = searchBox.getPlace();
@@ -22,6 +28,9 @@ function newLocation(){
     clearMap();
     handler(pos);
 }
+/*
+*resets the map so we can make laps at a new location in one session
+*/
 function clearMap(){
     polylines = [];
     document.getElementById('laps').innerHTML = "";
