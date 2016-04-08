@@ -2,7 +2,7 @@
 *Displays a lap in a random color
 **/
 function displayLap(lap){
-       var color = getRandomColor();
+       var color = getColor();
        var length = getDistanceArray(lap);
 
        length = Math.round(length);
@@ -17,4 +17,8 @@ function displayLap(lap){
        iDiv.style.backgroundColor = color;
 
        document.getElementById("laps").appendChild(iDiv);
+}
+function getColor(){
+       var colors = ["DeepPink", "DarkOrange", "DodgerBlue","Crimson","Indigo"];
+       return colors[lapsCreated-1];
 }

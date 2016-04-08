@@ -127,7 +127,7 @@ function drawPolyline(Coordinates, color) {
 	var Polyline = new google.maps.Polyline({
 		path: Coordinates,
 		strokeColor: color,
-		strokeWeight: 2,
+		strokeWeight: 3,
 		map: map
 	});
 	Polyline.setMap(map);
