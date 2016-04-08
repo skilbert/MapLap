@@ -32,6 +32,9 @@ function newLocation(){
 *resets the map so we can make laps at a new location in one session
 */
 function clearMap(){
+    for(var i = 0; i < polylines.length; i++){
+        polylines[i].setMap(null);
+    }
     polylines = [];
     document.getElementById('laps').innerHTML = "";
     lapsCreated = 0;
