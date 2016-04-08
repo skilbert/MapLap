@@ -1,5 +1,6 @@
 function gui(){
     placeSearch();
+    lengthSearch();
 }
 /*
 * Used for searching for a new location
@@ -15,11 +16,19 @@ function placeSearch(){
     });
     searchBox.addListener('place_changed', newLocation);
 }
+function lengthSearch(){
+    var btn = document.getElementById('length-search-btn');
+    var input = document.getElementById('length-search');
+
+    input.addEventListener('change', function() {
+        newLength(input.value);
+    });
+}
 /*
 * new location is found (searchbox has it)
 */
 function newLocation(){
-    console.log("SEARCH!!!!!!!!");
+    //console.log("SEARCH!!!!!!!!");
     var place = searchBox.getPlace();
     var pos = {
         lat: place.geometry.location.lat(),
@@ -27,6 +36,10 @@ function newLocation(){
     };
     clearMap();
     handler(pos);
+}
+function newLength(length){
+    console.log(length);
+
 }
 /*
 *resets the map so we can make laps at a new location in one session

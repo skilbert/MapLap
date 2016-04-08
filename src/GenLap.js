@@ -10,7 +10,7 @@ var lapsCreated = 0;
 *handler for generating a lap
 *
 **/
-function genLap(myPos, callback){
+function genLap(myPos, length, callback){
 	var snappedCoordinates = [];
 	var pathValuesUrl = [];
 
@@ -18,7 +18,7 @@ function genLap(myPos, callback){
 		//if we are not given the position we ask the browser for it
 		getPos(callback);
 	}else{
-		addPos(myPos, callback);
+		addPos(myPos, length, callback);
 	}
 }
 
@@ -33,7 +33,7 @@ function getPos(callback){
 **adds the position to the screen. zoom and text
 *@calls where() with myPos
 **/
-function addPos(myPos, callback){
+function addPos(myPos, length, callback){
 
 	if(myPos == undefined){
 		console.log("did not find pos, you would need to search");
@@ -46,14 +46,14 @@ function addPos(myPos, callback){
 		map.setCenter(myPos);
 		map.setZoom(15);
 	}
-	where(myPos, callback);
+	where(myPos, length, callback);
 }
 /**
 *where should the lap go? We find an origo to start the lap, the circle we generate contains the same start and ending point
 *the method can make 4 different laps and makes a different each time it is called. It counts with lapsCreated
 *@calls genPath with pathValuesUrl and myPos
 **/
-function where(myPos, callback){
+function where(myPos, length, callback){
 	console.log("generating alfa path");
 	var myPosLng = myPos["lng"]; // = 59.9622808; //for debug
 	var myPosLat = myPos["lat"]; //= 10.760098; // for debug
