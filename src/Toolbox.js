@@ -211,17 +211,15 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 /**
 *returns a URL with pathvalues with a circle around the origo provided
 **/
-function circle(origoLat, origoLng){
+function circleURL(origoLat, origoLng, size){
 
 	var i = 0;
 	var j = 0;
 
-	var marker;
 	var newPosLng;
 	var newPosLat;
 
 	var tmpPathValuesUrl = [];
-	var tmpPathValues = [];
 
 
 	for (i = 0; i < 100; i++){ // google only accepts 100 points at the time
@@ -237,16 +235,42 @@ function circle(origoLat, origoLng){
 	return tmpPathValuesUrl;
 }
 /**
+*returns a array with pathvalues with a circle around the origo provided
+**/
+function circleArr(origoLat, origoLng, size){
+
+	var i = 0;
+	var j = 0;
+
+	var newPosLng;
+	var newPosLat;
+
+	var tmpPathValues = [];
+
+
+	for (i = 0; i < 100; i++){ // google only accepts 100 points at the time
+		j = i * 3.6;
+		newPosLat =  size * 0.001 * Math.cos(j*(Math.PI / 180)) + origoLat;
+		newPosLng =  size * 0.002 * Math.sin(j*(Math.PI / 180)) + origoLng;
+
+		var pos =  new google.maps.LatLng(newPosLat, newPosLng);
+		//tmpPathValues.push(position);
+		tmpPathValues.push(pos);
+		//placeAMarker(position, 1); // for debug    
+	}
+	return tmpPathValues;
+}
+/**
 *calls googles snapToRoads. Takes myPos only to pass it to callback
 *@callback is used to return the data and avoid the code to run away without us
 **/
-function snapToRoads(pathValuesUrl, callback, myPos, callback2){
+function snapToRoads(pathValuesUrl, callback, myPos, length, callback2){
 	$.get('https://roads.googleapis.com/v1/snapToRoads', {
 		interpolate: true,
 		key: apiKey,
 		path: pathValuesUrl.join('|')
 	}, function(data) {
-		callback(data, myPos, callback2)
+		callback(data, myPos, length, callback2)
 	});
 }
 /**

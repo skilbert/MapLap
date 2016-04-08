@@ -70,9 +70,9 @@ var directionsService;
 
 var polylines = [];
 var length = 5;
-var size = 4;
 
 var searchBox;
+var lengthSearchEnabled = false;
 
 var totLaps = 3; //at this time we make 3 laps and show the to the user
 
@@ -93,25 +93,44 @@ function initMap() {
 	//handler(undefined);
 }
 
-function handler(position, lapsCreated, lap){
+function handler(position, length, lapsCreated, lap){
     //gen new lap with geoloacation from browser
 	if(position == undefined){
-		genLap(undefined, length, handler);
+        var setLength ={
+            desiredLength: undefined,
+            size: 4.0
+        }
+		genLap(undefined, setLength, handler);
+    //gen new lap with position
+    }else if(position != undefined && length == undefined){
+        //enables lengthSearch because we need position before we do that
+        if(lengthSearchEnabled == false){
+            lengthSearch(position);
+            lengthSearchEnabled = true;
+        }
 
-    //gen new lap with location provided as value
-	}else if(lapsCreated == undefined){
+        var setLength ={
+            desiredLength: undefined,
+            size: 4.0
+        }
+        genLap(position, setLength, handler);
+    //gen new lap with position and value provided as value
+	}else if(position != undefined && length != undefined && lapsCreated == undefined){
         genLap(position, length, handler);
 
-    //this is a return from genLap
-    }else if(lap != undefined){
+     //this is a return from genLap
+    }else if(position != undefined && length != undefined && lapsCreated != undefined && laps != undefined){
+
 		displayLap(lap);
 
 		console.log("lapsCreated: "+lapsCreated);
 		if(lapsCreated < totLaps){
 			console.log('\n');
-			handler(position);
+			handler(position, length);
 		}
-	}
+    }else{
+        console.log("That was strange");
+    }
 
 }
 </script>

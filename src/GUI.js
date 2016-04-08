@@ -1,6 +1,5 @@
 function gui(){
     placeSearch();
-    lengthSearch();
 }
 /*
 * Used for searching for a new location
@@ -16,13 +15,17 @@ function placeSearch(){
     });
     searchBox.addListener('place_changed', newLocation);
 }
-function lengthSearch(){
-    var btn = document.getElementById('length-search-btn');
-    var input = document.getElementById('length-search');
+function lengthSearch(myPos){
+    if(myPos != undefined){
+        var btn = document.getElementById('length-search-btn');
+        var input = document.getElementById('length-search');
 
-    input.addEventListener('change', function() {
-        newLength(input.value);
-    });
+        input.addEventListener('change', function() {
+            newLength(input.value, myPos);
+        });
+    }else{
+        console.log("can not call lengthSearch without knowing the position")
+    }
 }
 /*
 * new location is found (searchbox has it)
@@ -37,9 +40,15 @@ function newLocation(){
     clearMap();
     handler(pos);
 }
-function newLength(length){
-    console.log(length);
+function newLength(length, myPos){
 
+    console.log("THE USER SEARCHED FOR A NEW LENGTH: \n");
+    var call = {
+        desiredLength: length,
+        size: undefined
+    }
+    clearMap();
+    handler(myPos, call)
 }
 /*
 *resets the map so we can make laps at a new location in one session
@@ -51,4 +60,5 @@ function clearMap(){
     polylines = [];
     document.getElementById('laps').innerHTML = "";
     lapsCreated = 0;
+    lengthSearchEnabled = false;
 }
