@@ -17,7 +17,10 @@ function genLap(myPos, length, callback){
 	if(myPos == undefined){
 		//if we are not given the position we ask the browser for it
 		getPos(callback);
-	}else{
+	}else if(myPos == "error"){
+		addPos(undefined);
+	}
+	else{
 		addPos(myPos, length, callback);
 	}
 }
@@ -45,8 +48,8 @@ function addPos(myPos, length, callback){
 		infoWindow.setContent('We think you are here');
 		map.setCenter(myPos);
 		map.setZoom(15);
+		where(myPos, length, callback);
 	}
-	where(myPos, length, callback);
 }
 /**
 *where should the lap go? We find an origo to start the lap, the circle we generate contains the same start and ending point

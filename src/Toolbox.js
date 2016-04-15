@@ -65,6 +65,20 @@ function getDistanceArray(array){
 	}
 	return totDistance;
 }
+function bearing(p1, p2){
+	var lat1 = rad(p1.lat());
+	var lat2 = rad(p2.lat());
+
+	var lng1 = rad(p1.lng());
+	var lng2 = rad(p2.lng());
+
+	var y = Math.sin(lng2-lng1) * Math.cos(lat1);
+	var x = Math.cos(lat1)*Math.sin(lat2) -
+    Math.sin(lat1)*Math.cos(lat2)*Math.cos(lng2-lng1);
+	var brng = Math.atan2(y, x).toDegrees();
+
+	return brng;
+}
 /**
 *find the points that did not snap to a road
 **/
@@ -183,21 +197,31 @@ function findPos(callback, callback2){
 			};
 
 			if(typeof callback == 'function'){
-			      callback(pos, callback2);
+			      callback(pos, undefined, callback2);
 			}
 
 		},     function() {
 				//can not find pos
-				handleLocationError(true, infoWindow, map.getCenter());
+				//handleLocationError(true, infoWindow, map.getCenter());
 				if(typeof callback == 'function'){
-					callback(pos, callback2);
+					if(pos == undefined){
+						var pos = "error";
+						callback(pos, undefined, callback2);
+					}else{
+						callback(pos, undefined, callback2);
+					}
 				}
 			});
 	} else {
 		// Browser doesn't support Geolocation. This needs to be taken care of
-		handleLocationError(false, infoWindow, map.getCenter());
+		//handleLocationError(false, infoWindow, map.getCenter());
 		if(typeof callback == 'function'){
-			callback(pos, callback2);
+			if(pos == undefined){
+				var pos = "error";
+				callback(pos, undefined, callback2);
+			}else{
+				callback(pos, undefined, callback2);
+			}
 		}
 	}
 }
