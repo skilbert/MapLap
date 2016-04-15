@@ -45,7 +45,7 @@ function addPos(myPos, length, callback){
 		console.log("pos found. zooming and centering");
 
 		infoWindow.setPosition(myPos);
-		infoWindow.setContent('We think you are here');
+		//infoWindow.setContent('We think you are here');
 		map.setCenter(myPos);
 		map.setZoom(15);
 		where(myPos, length, callback);
