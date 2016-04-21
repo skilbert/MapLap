@@ -58,6 +58,7 @@ function clearMap(){
         polylines[i].setMap(null);
     }
     polylines = [];
+    polylinesArr = [];
     document.getElementById('laps').innerHTML = "";
     lapsCreated = 0;
     lengthSearchEnabled = false;

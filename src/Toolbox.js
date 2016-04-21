@@ -1,4 +1,4 @@
-//functions for various things that are not essential to the function of the webpage, but is used during debug or to calculate something.
+//functions for various things that are not (perhaps not true..) essential to the function of the webpage, but is used during debug or to calculate something.
 
 /**
 *Mark the snapped points on the map
@@ -65,6 +65,9 @@ function getDistanceArray(array){
 	}
 	return totDistance;
 }
+/**
+*find the bearing between two positions. Uses radians and returns in degrees
+**/
 function bearing(p1, p2){
 	var lat1 = rad(p1.lat());
 	var lat2 = rad(p2.lat());
@@ -75,9 +78,16 @@ function bearing(p1, p2){
 	var y = Math.sin(lng2-lng1) * Math.cos(lat1);
 	var x = Math.cos(lat1)*Math.sin(lat2) -
     Math.sin(lat1)*Math.cos(lat2)*Math.cos(lng2-lng1);
-	var brng = Math.atan2(y, x).toDegrees();
+	var brng = Math.atan2(y, x);
+	brng = toDegrees(brng);
 
 	return brng;
+}
+/**
+*converts to degrees
+**/
+function toDegrees (angle) {
+	return angle * (180 / Math.PI);
 }
 /**
 *find the points that did not snap to a road
@@ -133,10 +143,10 @@ function drawPolylineUrl(Coordinates) {
 	snappedPolyline.setMap(map);
 	polylines.push(snappedPolyline);
 }
+
 /**
 *draws the snapped polyline
 **/
-
 function drawPolyline(Coordinates, color) {
 	var Polyline = new google.maps.Polyline({
 		path: Coordinates,

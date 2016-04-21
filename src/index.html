@@ -69,12 +69,13 @@ var directionsDisplay;
 var directionsService;
 
 var polylines = [];
+var polylinesArr = [];
 var length = 5;
 
 var searchBox;
 var lengthSearchEnabled = false;
 
-var totLaps = 3; //at this time we make 3 laps and show the to the user
+var totLaps = 2; //at this time we make 3 laps and show the to the user
 
 function initMap() {
 	directionsDisplay = new google.maps.DirectionsRenderer();

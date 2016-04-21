@@ -44,7 +44,7 @@ function addPos(myPos, length, callback){
 	}else{
 		console.log("pos found. zooming and centering");
 
-		infoWindow.setPosition(myPos);
+		//infoWindow.setPosition(myPos);
 		//infoWindow.setContent('We think you are here');
 		map.setCenter(myPos);
 		map.setZoom(15);
@@ -97,11 +97,9 @@ function where(myPos, length, callback){
 			}else if(tmpLength > (thisLength + (slack*50))){
 				size = size - (Math.abs(tmpLength - thisLength)/2000) * (slack/20);
 			}else{
-				console.log("FOUND"+ size);
 				found = true;
 			}
 			slack++;
-			console.log(tmpLength);
 		}
 	}
 
